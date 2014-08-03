@@ -223,7 +223,6 @@ def quitCallback(): # Quit confirmation button
 	
 def offCallback(): # Turn Off Rasp
 	os.system("sudo halt")
-    sys.exit()	
 	
 def timeLapse():
 	global v

@@ -28,7 +28,7 @@ You must have gone through the [WiringPi-Python Setup instructions](https://gith
 
     sudo python lapse.py
 	
-Once youve got that working, have the Pi boot straight into the time-lapse software by editing/etc/rc.local and adding the following lines before exit 0
+Once youve got that working, have the Pi boot straight into the time-lapse software by editing /etc/rc.local and adding the following lines before exit 0
 
 	cd /home/pi/LapsePiTouch
 
