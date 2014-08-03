@@ -222,6 +222,7 @@ def quitCallback(): # Quit confirmation button
 	raise SystemExit
 	
 def offCallback(): # Turn Off Rasp
+	screenMode = 3
 	os.system("sudo halt")
 	
 def timeLapse():
@@ -455,6 +456,10 @@ while(True):
   # Overlay buttons on display and update
   for i,b in enumerate(buttons[screenMode]):
     b.draw(screen)
+  if screenMode == 3:
+    myfont = pygame.font.SysFont("Arial", 40)
+    label = myfont.render("GoodBye" , 1, (255,255,255))
+    screen.blit(label, (130, 110))
   if screenMode == 2:
     myfont = pygame.font.SysFont("Arial", 40)
     label = myfont.render(numberstring, 1, (255,255,255))
