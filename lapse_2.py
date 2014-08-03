@@ -217,10 +217,7 @@ def startCallback(n): # start/Stop the timelapse thread
 			currentframe = 0
 			# Re-instanciate the object for the next time around.
 			t = threading.Thread(target=timeLapse)
-			
-def quitCallback(): # Quit confirmation button
-	raise SystemExit
-			
+
 def timeLapse():
 	global v
 	global settling_time
@@ -300,8 +297,7 @@ buttons = [
   # Screen mode 0 is main view screen of current status
   [Button((  5,180,120, 60), bg='start', cb=startCallback, value=1),
    Button((130,180, 60, 60), bg='cog',   cb=viewCallback, value=0),
-   Button((195,180,60, 60), bg='stop',  cb=startCallback, value=0)
-   Button((260,180,60, 60), bg='quit',  cb=quitCallback)],
+   Button((195,180,120, 60), bg='stop',  cb=startCallback, value=0)],
 
   # Screen 1 for changing values and setting motor direction
   [Button((260,  0, 60, 60), bg='cog',   cb=valuesCallback, value=1),
@@ -452,11 +448,11 @@ while(True):
   for i,b in enumerate(buttons[screenMode]):
     b.draw(screen)
   if screenMode == 2:
-    myfont = pygame.font.SysFont("DroidSans", 40)
+    myfont = pygame.font.SysFont("Arial", 50)
     label = myfont.render(numberstring, 1, (255,255,255))
     screen.blit(label, (10, 2))
   if screenMode == 1:
-    myfont = pygame.font.SysFont("DroidSans", 20)
+    myfont = pygame.font.SysFont("Arial", 30)
     label = myfont.render("Pulse:" , 1, (255,255,255))
     screen.blit(label, (10, 10))
     label = myfont.render("Interval:" , 1, (255,255,255))
@@ -472,7 +468,7 @@ while(True):
     screen.blit(label, (130,130))
 
   if screenMode == 0:
-    myfont = pygame.font.SysFont("DroidSans", 20)
+    myfont = pygame.font.SysFont("Arial", 30)
     label = myfont.render("Pulse:" , 1, (255,255,255))
     screen.blit(label, (10, 10))
     label = myfont.render("Interval:" , 1, (255,255,255))
