@@ -452,11 +452,11 @@ while(True):
   for i,b in enumerate(buttons[screenMode]):
     b.draw(screen)
   if screenMode == 2:
-    myfont = pygame.font.SysFont("DroidSans", 40)
+    myfont = pygame.font.SysFont("Arial", 40)
     label = myfont.render(numberstring, 1, (255,255,255))
     screen.blit(label, (10, 2))
   if screenMode == 1:
-    myfont = pygame.font.SysFont("DroidSans", 20)
+    myfont = pygame.font.SysFont("Arial", 20)
     label = myfont.render("Pulse:" , 1, (255,255,255))
     screen.blit(label, (10, 10))
     label = myfont.render("Interval:" , 1, (255,255,255))
@@ -472,7 +472,7 @@ while(True):
     screen.blit(label, (130,130))
 
   if screenMode == 0:
-    myfont = pygame.font.SysFont("DroidSans", 20)
+    myfont = pygame.font.SysFont("Arial", 20)
     label = myfont.render("Pulse:" , 1, (255,255,255))
     screen.blit(label, (10, 10))
     label = myfont.render("Interval:" , 1, (255,255,255))
