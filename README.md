@@ -19,7 +19,7 @@ You must have gone through the [WiringPi-Python Setup instructions](https://gith
 
 **Get repo:**
     
-    git clone https://github.com/climberhunt/LapsePiTouch.git
+    git clone https://github.com/Artsonic/LapsePiTouch.git
     
     
 **Usage:**
@@ -27,6 +27,12 @@ You must have gone through the [WiringPi-Python Setup instructions](https://gith
     cd LapsePiTouch
 
     sudo python lapse.py
+	
+Once youve got that working, have the Pi boot straight into the time-lapse software by editing/etc/rc.local and adding the following lines before exit 0
+
+	cd /home/pi/LapsePiTouch
+
+	python lapse.py
 
 
 Full details at: [Dave's Blog](http://www.davidhunt.ie/?p=3349)

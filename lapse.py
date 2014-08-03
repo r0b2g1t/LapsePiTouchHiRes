@@ -222,8 +222,9 @@ def quitCallback(): # Quit confirmation button
 	raise SystemExit
 	
 def offCallback(): # Turn Off Rasp
-	os.system("sudo shutdown -h now")
-			
+	os.system("sudo halt")
+    sys.exit()	
+	
 def timeLapse():
 	global v
 	global settling_time
