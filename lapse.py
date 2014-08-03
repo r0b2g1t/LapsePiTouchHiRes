@@ -300,7 +300,7 @@ buttons = [
   # Screen mode 0 is main view screen of current status
   [Button((  5,180,120, 60), bg='start', cb=startCallback, value=1),
    Button((130,180, 60, 60), bg='cog',   cb=viewCallback, value=0),
-   Button((195,180,60, 60), bg='stop',  cb=startCallback, value=0)
+   Button((195,180,60, 60), bg='stop',  cb=startCallback, value=0),
    Button((260,180,60, 60), bg='quit',  cb=quitCallback)],
 
   # Screen 1 for changing values and setting motor direction
