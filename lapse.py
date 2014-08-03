@@ -298,10 +298,10 @@ icons = [] # This list gets populated at startup
 buttons = [
 
   # Screen mode 0 is main view screen of current status
-  [Button((  0,180,120, 60), bg='start', cb=startCallback, value=1),
-   Button((120,180, 60, 60), bg='cog',   cb=viewCallback, value=0),
-   Button((180,180,120, 60), bg='stop',  cb=startCallback, value=0),
-   Button((300,180,20, 60), bg='quit',  cb=quitCallback)],
+  [Button((  4,180,90, 60), bg='start', cb=startCallback, value=1),
+   Button((98,180, 60, 60), bg='cog',   cb=viewCallback, value=0),
+   Button((162,180,90, 60), bg='stop',  cb=startCallback, value=0),
+   Button((256,180,60, 60), bg='quit',  cb=quitCallback)],
 
   # Screen 1 for changing values and setting motor direction
   [Button((260,  0, 60, 60), bg='cog',   cb=valuesCallback, value=1),
