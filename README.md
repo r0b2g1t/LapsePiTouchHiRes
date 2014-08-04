@@ -9,7 +9,7 @@ Read more about this project at [Dave's Blog](http://www.davidhunt.ie/?p=3349)
 
 Enjoy!
 
-![LapsePi Touch](http://www.davidhunt.ie/wp-content/uploads/2014/01/SZ0A4273-Edit.jpg)
+![LapsePi Touch](http://i.imgur.com/0LiKRwd.jpg)
 
 **Prerequisites:**
 
