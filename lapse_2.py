@@ -404,7 +404,7 @@ print"Load Settings"
 loadSettings() # Must come last; fiddles with Button/Icon states
 
 print "loading background.."
-img    = pygame.image.load("icons/LapsePi.png")
+img    = pygame.image.load("icons/LapsePi_hi.png")
 
 if img is None or img.get_height() < 240: # Letterbox, clear background
   screen.fill(0)
@@ -492,7 +492,7 @@ while(True):
     remainingStr = "%dh%dm%ds" % (d.hour, d.minute, d.second)
 
     label = myfont.render(remainingStr , 1, (255,255,255))
-    screen.blit(label, (240, 170))
+    screen.blit(label, (240, 130))
   pygame.display.update()
 
   screenModePrior = screenMode
