@@ -225,6 +225,7 @@ def timeLapse():
 	global backlightpin
 	global busy, threadExited
 	global currentframe
+	global error
 
 
 	busy = True
@@ -242,7 +243,7 @@ def timeLapse():
 		# disable the backlight, critical for night timelapses, also saves power
 		os.system("echo '0' > /sys/class/gpio/gpio252/value")
 		
-		os.system('gphoto2 --capture-image-and-download --filename=/mnt/usbstick/timelapse' + str(i) + 'of' + str(v['Images']) + '.jpg')
+		error = os.system('gphoto2 --capture-image-and-download --filename=/mnt/usbstick/timelapse' + str(i) + 'of' + str(v['Images']) + '.jpg')
 		
 		#  enable the backlight
 		os.system("echo '1' > /sys/class/gpio/gpio252/value")
@@ -481,11 +482,11 @@ while(True):
 		screen.blit(label, (10,130))
 
 		label = myfont.render(str(v['Pulse']) + "ms" , 1, (255,255,255))
-		screen.blit(label, (240, 10))
+		screen.blit(label, (280, 10))
 		label = myfont.render(str(v['Interval']) + "ms" , 1, (255,255,255))
-		screen.blit(label, (240, 50))
+		screen.blit(label, (280, 50))
 		label = myfont.render(str(currentframe) + " of " + str(v['Images']) , 1, (255,255,255))
-		screen.blit(label, (240, 90))
+		screen.blit(label, (280, 90))
 		
 		intervalLength = float((v['Pulse'] + v['Interval'] + (settling_time*1000) + (shutter_length*1000)))
 		remaining = float((intervalLength * (v['Images'] - currentframe)) / 1000)
@@ -494,7 +495,10 @@ while(True):
 		remainingStr = "%dh%dm%ds" % (d.hour, d.minute, d.second)
 		
 		label = myfont.render(remainingStr , 1, (255,255,255))
-		screen.blit(label, (240, 130))
+		screen.blit(label, (280, 130))
+		
+		label = myfont.render(error , 1, (255,255,255))
+		screen.blit(label, 10, 280) 
 	pygame.display.update()
 
 	screenModePrior = screenMode
