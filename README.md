@@ -9,7 +9,7 @@ Read more about this project at [Dave's Blog](http://www.davidhunt.ie/?p=3349)
 
 Enjoy!
 
-Modification for HiRes Display 
+Modification for HiRes Display and use gphoto2 for camera triggering
 
 ![LapsePi Touch](http://i.imgur.com/0LiKRwd.jpg)
 
@@ -21,20 +21,20 @@ You must have gone through the [WiringPi-Python Setup instructions](https://gith
 
 **Get repo:**
     
-    git clone https://github.com/Artsonic/LapsePiTouch.git
+    git clone https://github.com/koehleru/LapsePiTouch.git
     
     
 **Usage:**
 
     cd LapsePiTouch
 
-    sudo python lapse.py
+    sudo python lapse_hi.py
 	
 Once youve got that working, have the Pi boot straight into the time-lapse software by editing /etc/rc.local and adding the following lines before exit 0
 
 	cd /home/pi/LapsePiTouch
 
-	python lapse.py
+	python lapse_hi.py
 
 
 Full details at: [Dave's Blog](http://www.davidhunt.ie/?p=3349)

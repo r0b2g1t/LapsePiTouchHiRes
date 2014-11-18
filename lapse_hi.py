@@ -24,6 +24,7 @@ from pygame.locals import *
 from subprocess import call  
 from time import sleep
 from datetime import datetime, timedelta
+from uuid import uuid4
 
 # UI classes ---------------------------------------------------------------
 
@@ -244,7 +245,7 @@ def timeLapse():
 		# disable the backlight, critical for night timelapses, also saves power
 		os.system("echo '0' > /sys/class/gpio/gpio252/value")
 		
-		os.system('gphoto2 --capture-image-and-download --filename=timelapse' + str(i) + 'of' + str(v['Images']))
+		os.system('gphoto2 --capture-image-and-download --filename=/mnt/usbstick/timelapse' + str(i) + 'of' + str(v['Images']) + '.jpg')
 		
 		#  enable the backlight
 		os.system("echo '1' > /sys/class/gpio/gpio252/value")
