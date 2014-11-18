@@ -216,6 +216,13 @@ def startCallback(n): # start/Stop the timelapse thread
 			# Re-instanciate the object for the next time around.
 			t = threading.Thread(target=timeLapse)
 
+def quitCallback(): # Quit confirmation button
+	raise SystemExit
+
+def offCallback(): # Turn Off Rasp
+	os.system("sudo halt")
+	raise SystemExit
+
 def timeLapse():
 	global v
 	global settling_time
@@ -297,7 +304,9 @@ buttons = [
   # Screen mode 0 is main view screen of current status
   [Button((  5,180,120, 60), bg='start', cb=startCallback, value=1),
    Button((130,180, 60, 60), bg='cog',   cb=viewCallback, value=0),
-   Button((195,180,120, 60), bg='stop',  cb=startCallback, value=0)],
+   Button((195,180,120, 60), bg='stop',  cb=startCallback, value=0),
+   Button((193,180,60, 60), bg='quit', cb=quitCallback),
+   Button((256,180,60, 60), bg='off', cb=offCallback)],
 
   # Screen 1 for changing values and setting motor direction
   [Button((260,  0, 60, 60), bg='cog',   cb=valuesCallback, value=1),
