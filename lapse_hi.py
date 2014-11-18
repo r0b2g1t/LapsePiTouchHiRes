@@ -12,19 +12,14 @@
 # BSD license, all text above must be included in any redistribution.
 
 import wiringpi2
-import atexit
 import cPickle as pickle
-import errno
 import fnmatch
-import io
 import os
 import pygame
 import threading
-from pygame.locals import *
-from subprocess import call  
+from pygame.locals import FULLSCREEN, MOUSEBUTTONDOWN, MOUSEBUTTONUP
 from time import sleep
 from datetime import datetime, timedelta
-from uuid import uuid4
 
 # UI classes ---------------------------------------------------------------
 
@@ -36,11 +31,11 @@ from uuid import uuid4
 class Icon:
 
 	def __init__(self, name):
-	  self.name = name
-	  try:
-	    self.bitmap = pygame.image.load(iconPath + '/' + name + '.png')
-	  except:
-	    pass
+		self.name = name
+		try:
+			self.bitmap = pygame.image.load(iconPath + '/' + name + '.png')
+		except:
+			pass
 
 # Button is a simple tappable screen region.  Each has:
 #  - bounding rect ((X,Y,W,H) in pixels)
@@ -61,54 +56,56 @@ class Icon:
 class Button:
 
 	def __init__(self, rect, **kwargs):
-	  self.rect     = rect # Bounds
-	  self.color    = None # Background fill color, if any
-	  self.iconBg   = None # Background Icon (atop color fill)
-	  self.iconFg   = None # Foreground Icon (atop background)
-	  self.bg       = None # Background Icon name
-	  self.fg       = None # Foreground Icon name
-	  self.callback = None # Callback function
-	  self.value    = None # Value passed to callback
-	  for key, value in kwargs.iteritems():
-	    if   key == 'color': self.color    = value
-	    elif key == 'bg'   : self.bg       = value
-	    elif key == 'fg'   : self.fg       = value
-	    elif key == 'cb'   : self.callback = value
-	    elif key == 'value': self.value    = value
+		self.rect     = rect # Bounds
+		self.color    = None # Background fill color, if any
+		self.iconBg   = None # Background Icon (atop color fill)
+		self.iconFg   = None # Foreground Icon (atop background)
+		self.bg       = None # Background Icon name
+		self.fg       = None # Foreground Icon name
+		self.callback = None # Callback function
+		self.value    = None # Value passed to callback
+		for key, value in kwargs.iteritems():
+			if   key == 'color': self.color    = value
+			elif key == 'bg'   : self.bg       = value
+			elif key == 'fg'   : self.fg       = value
+			elif key == 'cb'   : self.callback = value
+			elif key == 'value': self.value    = value
 
 	def selected(self, pos):
-	  x1 = self.rect[0]
-	  y1 = self.rect[1]
-	  x2 = x1 + self.rect[2] - 1
-	  y2 = y1 + self.rect[3] - 1
-	  if ((pos[0] >= x1) and (pos[0] <= x2) and
+		x1 = self.rect[0]
+		y1 = self.rect[1]
+		x2 = x1 + self.rect[2] - 1
+		y2 = y1 + self.rect[3] - 1
+		if ((pos[0] >= x1) and (pos[0] <= x2) and
 	      (pos[1] >= y1) and (pos[1] <= y2)):
-	    if self.callback:
-	      if self.value is None: self.callback()
-	      else:                  self.callback(self.value)
-	    return True
-	  return False
+			if self.callback:
+				if self.value is None: 
+					self.callback()
+				else:                  
+					self.callback(self.value)
+					return True
+				return False
 
 	def draw(self, screen):
-	  if self.color:
-	    screen.fill(self.color, self.rect)
-	  if self.iconBg:
-	    screen.blit(self.iconBg.bitmap,
+		if self.color:
+			screen.fill(self.color, self.rect)
+		if self.iconBg:
+			screen.blit(self.iconBg.bitmap,
 	      (self.rect[0]+(self.rect[2]-self.iconBg.bitmap.get_width())/2,
 	       self.rect[1]+(self.rect[3]-self.iconBg.bitmap.get_height())/2))
-	  if self.iconFg:
-	    screen.blit(self.iconFg.bitmap,
+		if self.iconFg:
+			screen.blit(self.iconFg.bitmap,
 	      (self.rect[0]+(self.rect[2]-self.iconFg.bitmap.get_width())/2,
 	       self.rect[1]+(self.rect[3]-self.iconFg.bitmap.get_height())/2))
 
 	def setBg(self, name):
-	  if name is None:
-	    self.iconBg = None
-	  else:
-	    for i in icons:
-	      if name == i.name:
-	        self.iconBg = i
-	        break
+		if name is None:
+			self.iconBg = None
+		else:
+			for i in icons:
+				if name == i.name:
+					self.iconBg = i
+					break
 
 # UI callbacks -------------------------------------------------------------
 # These are defined before globals because they're referenced by items in
@@ -193,12 +190,12 @@ def valuesCallback(n): # Pass 1 (next setting) or -1 (prev setting)
 def viewCallback(n): # Viewfinder buttons
 	global screenMode, screenModePrior
 	if n is 0:   # Gear icon
-	  screenMode = 1
+		screenMode = 1
 
 def doneCallback(): # Exit settings
 	global screenMode
 	if screenMode > 0:
-	  saveSettings()
+		saveSettings()
 	screenMode = 0 # Switch back to main window
 
 def startCallback(n): # start/Stop the timelapse thread
@@ -333,22 +330,22 @@ buttons = [
 def saveSettings():
 	global v
 	try:
-	  outfile = open('lapse.pkl', 'wb')
-	  # Use a dictionary (rather than pickling 'raw' values) so
-	  # the number & order of things can change without breaking.
-	  pickle.dump(v, outfile)
-	  outfile.close()
+		outfile = open('lapse.pkl', 'wb')
+		# Use a dictionary (rather than pickling 'raw' values) so
+		# the number & order of things can change without breaking.
+		pickle.dump(v, outfile)
+		outfile.close()
 	except:
-	  pass
+		pass
 
 def loadSettings():
 	global v
 	try:
-	  infile = open('lapse.pkl', 'rb')
-	  v = pickle.load(infile)
-	  infile.close()
+		infile = open('lapse.pkl', 'rb')
+		v = pickle.load(infile)
+		infile.close()
 	except:
-	  pass
+		pass
 
 
 
@@ -376,19 +373,19 @@ screen = pygame.display.set_mode(modes[0], FULLSCREEN, 16)
 print "Loading Icons..."
 # Load all icons at startup.
 for file in os.listdir(iconPath):
-  if fnmatch.fnmatch(file, '*.png'):
-    icons.append(Icon(file.split('.')[0]))
+	if fnmatch.fnmatch(file, '*.png'):
+		icons.append(Icon(file.split('.')[0]))
 # Assign Icons to Buttons, now that they're loaded
 print"Assigning Buttons"
 for s in buttons:        # For each screenful of buttons...
-  for b in s:            #  For each button on screen...
-    for i in icons:      #   For each icon...
-      if b.bg == i.name: #    Compare names; match?
-        b.iconBg = i     #     Assign Icon to Button
-        b.bg     = None  #     Name no longer used; allow garbage collection
-      if b.fg == i.name:
-        b.iconFg = i
-        b.fg     = None
+	for b in s:            #  For each button on screen...
+		for i in icons:      #   For each icon...
+			if b.bg == i.name: #    Compare names; match?
+				b.iconBg = i     #     Assign Icon to Button
+				b.bg     = None  #     Name no longer used; allow garbage collection
+			if b.fg == i.name:
+				b.iconFg = i
+				b.fg     = None
 
 # Set up GPIO pins
 print "Init GPIO pins..."
@@ -412,9 +409,9 @@ print "loading background.."
 img    = pygame.image.load("icons/LapsePi_hi.png")
 
 if img is None or img.get_height() < 240: # Letterbox, clear background
-  screen.fill(0)
+	screen.fill(0)
 if img:
-  screen.blit(img,
+	screen.blit(img,
     ((480 - img.get_width() ) / 2,
      (320 - img.get_height()) / 2))
 pygame.display.update()
@@ -427,78 +424,78 @@ sleep(2)
 print "mainloop.."
 while(True):
 
-  # Process touchscreen input
-  while True:
-    for event in pygame.event.get():
-      if(event.type is MOUSEBUTTONDOWN):
-        pos = pygame.mouse.get_pos()
-        for b in buttons[screenMode]:
-          if b.selected(pos): break
-      elif(event.type is MOUSEBUTTONUP):
-        motorRunning = 0
-        gpio.digitalWrite(motorpinA,gpio.LOW)
-        gpio.digitalWrite(motorpinB,gpio.LOW)
+	# Process touchscreen input
+	while True:
+		for event in pygame.event.get():
+			if(event.type is MOUSEBUTTONDOWN):
+				pos = pygame.mouse.get_pos()
+				for b in buttons[screenMode]:
+					if b.selected(pos): break
+			elif(event.type is MOUSEBUTTONUP):
+				motorRunning = 0
+				gpio.digitalWrite(motorpinA,gpio.LOW)
+				gpio.digitalWrite(motorpinB,gpio.LOW)
 
-    if screenMode >= 0 or screenMode != screenModePrior: break
+		if screenMode >= 0 or screenMode != screenModePrior: break
 
 
-  if img is None or img.get_height() < 240: # Letterbox, clear background
-    screen.fill(0)
-  if img:
-    screen.blit(img,
-      ((480 - img.get_width() ) / 2,
-       (320 - img.get_height()) / 2))
+	if img is None or img.get_height() < 240: # Letterbox, clear background
+		screen.fill(0)
+	if img:
+		screen.blit(img,
+      		((480 - img.get_width() ) / 2,
+       		(320 - img.get_height()) / 2))
 
-  # Overlay buttons on display and update
-  for i,b in enumerate(buttons[screenMode]):
-    b.draw(screen)
-  if screenMode == 2:
-    myfont = pygame.font.SysFont("Arial", 50)
-    label = myfont.render(numberstring, 1, (255,255,255))
-    screen.blit(label, (10, 2))
-  if screenMode == 1:
-    myfont = pygame.font.SysFont("Arial", 30)
-    label = myfont.render("Pulse:" , 1, (255,255,255))
-    screen.blit(label, (10, 10))
-    label = myfont.render("Interval:" , 1, (255,255,255))
-    screen.blit(label, (10, 70))
-    label = myfont.render("Frames:" , 1, (255,255,255))
-    screen.blit(label, (10,130))
+	# Overlay buttons on display and update
+	for i,b in enumerate(buttons[screenMode]):
+		b.draw(screen)
+	if screenMode == 2:
+		myfont = pygame.font.SysFont("Arial", 50)
+		label = myfont.render(numberstring, 1, (255,255,255))
+		screen.blit(label, (10, 2))
+	if screenMode == 1:
+		myfont = pygame.font.SysFont("Arial", 30)
+		label = myfont.render("Pulse:" , 1, (255,255,255))
+		screen.blit(label, (10, 10))
+		label = myfont.render("Interval:" , 1, (255,255,255))
+		screen.blit(label, (10, 70))
+		label = myfont.render("Frames:" , 1, (255,255,255))
+		screen.blit(label, (10,130))
 
-    label = myfont.render(str(v['Pulse']) + "ms" , 1, (255,255,255))
-    screen.blit(label, (130, 10))
-    label = myfont.render(str(v['Interval']) + "ms" , 1, (255,255,255))
-    screen.blit(label, (130, 70))
-    label = myfont.render(str(v['Images']) , 1, (255,255,255))
-    screen.blit(label, (130,130))
+		label = myfont.render(str(v['Pulse']) + "ms" , 1, (255,255,255))
+		screen.blit(label, (130, 10))
+		label = myfont.render(str(v['Interval']) + "ms" , 1, (255,255,255))
+		screen.blit(label, (130, 70))
+		label = myfont.render(str(v['Images']) , 1, (255,255,255))
+		screen.blit(label, (130,130))
 
-  if screenMode == 0:
-    myfont = pygame.font.SysFont("Arial", 30)
-    label = myfont.render("Pulse:" , 1, (255,255,255))
-    screen.blit(label, (10, 10))
-    label = myfont.render("Interval:" , 1, (255,255,255))
-    screen.blit(label, (10, 50))
-    label = myfont.render("Frames:" , 1, (255,255,255))
-    screen.blit(label, (10, 90))
-    label = myfont.render("Remaining:" , 1, (255,255,255))
-    screen.blit(label, (10,130))
+	if screenMode == 0:
+		myfont = pygame.font.SysFont("Arial", 30)
+		label = myfont.render("Pulse:" , 1, (255,255,255))
+		screen.blit(label, (10, 10))
+		label = myfont.render("Interval:" , 1, (255,255,255))
+		screen.blit(label, (10, 50))
+		label = myfont.render("Frames:" , 1, (255,255,255))
+		screen.blit(label, (10, 90))
+		label = myfont.render("Remaining:" , 1, (255,255,255))
+		screen.blit(label, (10,130))
 
-    label = myfont.render(str(v['Pulse']) + "ms" , 1, (255,255,255))
-    screen.blit(label, (240, 10))
-    label = myfont.render(str(v['Interval']) + "ms" , 1, (255,255,255))
-    screen.blit(label, (240, 50))
-    label = myfont.render(str(currentframe) + " of " + str(v['Images']) , 1, (255,255,255))
-    screen.blit(label, (240, 90))
+		label = myfont.render(str(v['Pulse']) + "ms" , 1, (255,255,255))
+		screen.blit(label, (240, 10))
+		label = myfont.render(str(v['Interval']) + "ms" , 1, (255,255,255))
+		screen.blit(label, (240, 50))
+		label = myfont.render(str(currentframe) + " of " + str(v['Images']) , 1, (255,255,255))
+		screen.blit(label, (240, 90))
+		
+		intervalLength = float((v['Pulse'] + v['Interval'] + (settling_time*1000) + (shutter_length*1000)))
+		remaining = float((intervalLength * (v['Images'] - currentframe)) / 1000)
+		sec = timedelta(seconds=int(remaining))
+		d = datetime(1,1,1) + sec
+		remainingStr = "%dh%dm%ds" % (d.hour, d.minute, d.second)
+		
+		label = myfont.render(remainingStr , 1, (255,255,255))
+		screen.blit(label, (240, 130))
+	pygame.display.update()
 
-    intervalLength = float((v['Pulse'] + v['Interval'] + (settling_time*1000) + (shutter_length*1000)))
-    remaining = float((intervalLength * (v['Images'] - currentframe)) / 1000)
-    sec = timedelta(seconds=int(remaining))
-    d = datetime(1,1,1) + sec
-    remainingStr = "%dh%dm%ds" % (d.hour, d.minute, d.second)
-
-    label = myfont.render(remainingStr , 1, (255,255,255))
-    screen.blit(label, (240, 130))
-  pygame.display.update()
-
-  screenModePrior = screenMode
+	screenModePrior = screenMode
 
