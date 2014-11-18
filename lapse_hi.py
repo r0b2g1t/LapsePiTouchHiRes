@@ -227,7 +227,6 @@ def timeLapse():
 	global currentframe
 	global error
 
-
 	busy = True
 
 	for i in range( 1 , v['Images'] + 1 ):
@@ -281,6 +280,7 @@ dict_idx	   = "Interval"
 v = { "Pulse": 100,
 	"Interval": 3000,
 	"Images": 150}
+error = ''
 
 icons = [] # This list gets populated at startup
 
