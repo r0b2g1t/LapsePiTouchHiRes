@@ -498,7 +498,7 @@ while(True):
 		screen.blit(label, (280, 130))
 		
 		label = myfont.render(error , 1, (255,255,255))
-		screen.blit(label, 10, 280) 
+		screen.blit(label, (10, 280)) 
 	pygame.display.update()
 
 	screenModePrior = screenMode
