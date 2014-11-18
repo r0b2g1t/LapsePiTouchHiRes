@@ -244,7 +244,7 @@ def timeLapse():
 		# disable the backlight, critical for night timelapses, also saves power
 		os.system("echo '0' > /sys/class/gpio/gpio252/value")
 		
-		os.system('gphoto2 --capture-image-and-download --filename=timelapse' + i + 'of' + v['Images'])
+		os.system('gphoto2 --capture-image-and-download --filename=timelapse' + str(i) + 'of' + str(v['Images']))
 		
 		#  enable the backlight
 		os.system("echo '1' > /sys/class/gpio/gpio252/value")
