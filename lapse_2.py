@@ -228,6 +228,7 @@ def timeLapse():
 	global busy, threadExited
 	global currentframe
 
+
 	busy = True
 
 	for i in range( 1 , v['Images'] + 1 ):
@@ -242,9 +243,9 @@ def timeLapse():
 
 		# disable the backlight, critical for night timelapses, also saves power
 		os.system("echo '0' > /sys/class/gpio/gpio252/value")
-		gpio.digitalWrite(shutterpin,gpio.HIGH)
-		sleep(shutter_length)
-		gpio.digitalWrite(shutterpin,gpio.LOW)
+		
+		os.system('gphoto2 --capture-image-and-download --filename=timelapse' + i + 'of' + v['Images'])
+		
 		#  enable the backlight
 		os.system("echo '1' > /sys/class/gpio/gpio252/value")
 		interval = float(v['Interval'])/1000.0
@@ -358,6 +359,9 @@ os.putenv('SDL_FBDEV'      , '/dev/fb1')
 os.putenv('SDL_MOUSEDRV'   , 'TSLIB')
 os.putenv('SDL_MOUSEDEV'   , '/dev/input/touchscreen')
 
+# auto-detect camera
+print "Init gphoto2"
+os.system('gphoto2 --auto-detect')
 
 # Init pygame and screen
 print "Initting..."
