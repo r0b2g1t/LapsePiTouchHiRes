@@ -9,11 +9,13 @@ Read more about this project at [Dave's Blog](http://www.davidhunt.ie/?p=3349)
 
 Enjoy!
 
+Modification for HiRes Display 
+
 ![LapsePi Touch](http://i.imgur.com/0LiKRwd.jpg)
 
 **Prerequisites:**
 
-You must have gone through the [Adafruit PiTFT setup instructions](http://learn.adafruit.com/adafruit-pitft-28-inch-resistive-touchscreen-display-raspberry-pi).
+You must have gone through the [Adafruit PiTFT setup instructions](https://learn.adafruit.com/adafruit-pitft-3-dot-5-touch-screen-for-raspberry-pi).
 
 You must have gone through the [WiringPi-Python Setup instructions](https://github.com/WiringPi/WiringPi-Python).
 
