@@ -388,7 +388,7 @@ for s in buttons:        # For each screenful of buttons...
 # Set up GPIO pins
 print "Init GPIO pins..."
 gpio = wiringpi2.GPIO(wiringpi2.GPIO.WPI_MODE_GPIO)  
-gpio.pinMode(shutterpin,gpio.OUTPUT)  
+#gpio.pinMode(shutterpin,gpio.OUTPUT)  
 gpio.pinMode(motorpinA,gpio.OUTPUT)
 gpio.pinMode(motorpinB,gpio.OUTPUT)
 gpio.pinMode(motorpinB,gpio.OUTPUT)
@@ -410,8 +410,8 @@ if img is None or img.get_height() < 240: # Letterbox, clear background
   screen.fill(0)
 if img:
   screen.blit(img,
-    ((320 - img.get_width() ) / 2,
-     (240 - img.get_height()) / 2))
+    ((480 - img.get_width() ) / 2,
+     (320 - img.get_height()) / 2))
 pygame.display.update()
 sleep(2)
 
@@ -441,8 +441,8 @@ while(True):
     screen.fill(0)
   if img:
     screen.blit(img,
-      ((320 - img.get_width() ) / 2,
-       (240 - img.get_height()) / 2))
+      ((480 - img.get_width() ) / 2,
+       (320 - img.get_height()) / 2))
 
   # Overlay buttons on display and update
   for i,b in enumerate(buttons[screenMode]):
@@ -479,11 +479,11 @@ while(True):
     screen.blit(label, (10,130))
 
     label = myfont.render(str(v['Pulse']) + "ms" , 1, (255,255,255))
-    screen.blit(label, (160, 10))
+    screen.blit(label, (240, 10))
     label = myfont.render(str(v['Interval']) + "ms" , 1, (255,255,255))
-    screen.blit(label, (160, 50))
+    screen.blit(label, (240, 50))
     label = myfont.render(str(currentframe) + " of " + str(v['Images']) , 1, (255,255,255))
-    screen.blit(label, (160, 90))
+    screen.blit(label, (240, 90))
 
     intervalLength = float((v['Pulse'] + v['Interval'] + (settling_time*1000) + (shutter_length*1000)))
     remaining = float((intervalLength * (v['Images'] - currentframe)) / 1000)
@@ -492,7 +492,7 @@ while(True):
     remainingStr = "%dh%dm%ds" % (d.hour, d.minute, d.second)
 
     label = myfont.render(remainingStr , 1, (255,255,255))
-    screen.blit(label, (160, 130))
+    screen.blit(label, (240, 170))
   pygame.display.update()
 
   screenModePrior = screenMode
