@@ -9,7 +9,7 @@ Read more about this project at [Dave's Blog](http://www.davidhunt.ie/?p=3349)
 
 Enjoy!
 
-Modification for HiRes Display and use gphoto2 for camera triggering
+Modification for HiRes Display (480x320) and use gphoto2 for camera triggering
 
 ![LapsePi Touch](http://i.imgur.com/0LiKRwd.jpg)
 
@@ -39,4 +39,4 @@ Once youve got that working, have the Pi boot straight into the time-lapse softw
 
 Full details at: [Dave's Blog](http://www.davidhunt.ie/?p=3349)
 
-If you would like to donate to the Lapse Pi Touch project to keep it active you can do so via [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y3Y6NK98CZUZW)
+for donation Bitcoin 1LPGEoSdDaXrNuhuWtEH1EyFoTM7gjYs5h
