@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # Lapse-Pi timelapse controller for Raspberry Pi
 # This must run as root (sudo python lapse.py) due to framebuffer, etc.
 #
@@ -229,7 +230,6 @@ def timeLapse():
 	global settling_time
 	global shutter_length
 	global motorpin
-	global shutterpin
 	global backlightpin
 	global busy, threadExited
 	global currentframe
@@ -275,7 +275,6 @@ numberstring	= "0"
 motorRunning	= 0
 motorDirection	= 0
 returnScreen   = 0
-shutterpin     = 17
 motorpinA      = 18
 motorpinB      = 27
 motorpin       = motorpinA
@@ -402,7 +401,6 @@ for s in buttons:        # For each screenful of buttons...
 # Set up GPIO pins
 print("Init GPIO pins...")
 gpio = wiringpi2.GPIO(wiringpi2.GPIO.WPI_MODE_GPIO)  
-#gpio.pinMode(shutterpin,gpio.OUTPUT)  
 gpio.pinMode(motorpinA,gpio.OUTPUT)
 gpio.pinMode(motorpinB,gpio.OUTPUT)
 gpio.pinMode(motorpinB,gpio.OUTPUT)
