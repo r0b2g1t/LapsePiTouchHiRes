@@ -39,4 +39,4 @@ Once youve got that working, have the Pi boot straight into the time-lapse softw
 
 Full details at: [Dave's Blog](http://www.davidhunt.ie/?p=3349)
 
-for donation Bitcoin 1LPGEoSdDaXrNuhuWtEH1EyFoTM7gjYs5h
+for donation bitcoin:1LPGEoSdDaXrNuhuWtEH1EyFoTM7gjYs5h
