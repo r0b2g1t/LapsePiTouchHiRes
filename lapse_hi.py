@@ -17,6 +17,7 @@ import fnmatch
 import os
 import pygame
 import threading
+import time
 from pygame.locals import FULLSCREEN, MOUSEBUTTONDOWN, MOUSEBUTTONUP
 from time import sleep
 from datetime import datetime, timedelta
@@ -54,7 +55,7 @@ class Icon:
 # buttons[] list to assign the Icon objects (from names) to each Button.
 
 class Button:
-
+	
 	def __init__(self, rect, **kwargs):
 		self.rect     = rect # Bounds
 		self.color    = None # Background fill color, if any
@@ -249,7 +250,8 @@ def timeLapse():
 		# disable the backlight, critical for night timelapses, also saves power
 		os.system("echo '0' > /sys/class/gpio/gpio252/value")
 		
-		error = os.system('/usr/local/bin/gphoto2 --capture-image-and-download --filename=/mnt/usbstick/timelapse' + str(i) + 'of' + str(v['Images']) + '.jpg')
+		now = time.strftime("%H_%M_%S")
+		error = os.system('/usr/local/bin/gphoto2 --capture-image-and-download --filename=/mnt/usbstick/timelapse_' + str(now) + '_' + str(i) + 'of' + str(v['Images']) + '.jpg')
 		
 		#  enable the backlight
 		os.system("echo '1' > /sys/class/gpio/gpio252/value")
@@ -368,25 +370,25 @@ os.putenv('SDL_MOUSEDRV'   , 'TSLIB')
 os.putenv('SDL_MOUSEDEV'   , '/dev/input/touchscreen')
 
 # auto-detect camera
-print "Init gphoto2"
+print("Init gphoto2")
 os.system('/usr/local/bin/gphoto2 --auto-detect')
 
 # Init pygame and screen
-print "Initting..."
+print ("Initting...")
 pygame.init()
-print "Setting Mouse invisible..."
+print("Setting Mouse invisible...")
 pygame.mouse.set_visible(False)
-print "Setting fullscreen..."
+print("Setting fullscreen...")
 modes = pygame.display.list_modes(16)
 screen = pygame.display.set_mode(modes[0], FULLSCREEN, 16)
 
-print "Loading Icons..."
+print ("Loading Icons...")
 # Load all icons at startup.
 for file in os.listdir(iconPath):
 	if fnmatch.fnmatch(file, '*.png'):
 		icons.append(Icon(file.split('.')[0]))
 # Assign Icons to Buttons, now that they're loaded
-print"Assigning Buttons"
+print("Assigning Buttons")
 for s in buttons:        # For each screenful of buttons...
 	for b in s:            #  For each button on screen...
 		for i in icons:      #   For each icon...
@@ -398,7 +400,7 @@ for s in buttons:        # For each screenful of buttons...
 				b.fg     = None
 
 # Set up GPIO pins
-print "Init GPIO pins..."
+print("Init GPIO pins...")
 gpio = wiringpi2.GPIO(wiringpi2.GPIO.WPI_MODE_GPIO)  
 #gpio.pinMode(shutterpin,gpio.OUTPUT)  
 gpio.pinMode(motorpinA,gpio.OUTPUT)
@@ -412,10 +414,10 @@ os.system("echo 252 > /sys/class/gpio/export")
 os.system("echo 'out' > /sys/class/gpio/gpio252/direction")
 os.system("echo '1' > /sys/class/gpio/gpio252/value")
 
-print"Load Settings"
+print("Load Settings")
 loadSettings() # Must come last; fiddles with Button/Icon states
 
-print "loading background.."
+print("loading background..")
 img    = pygame.image.load("icons/LapsePi_hi.png")
 
 if img is None or img.get_height() < 240: # Letterbox, clear background
@@ -431,7 +433,7 @@ sleep(2)
 
 
 
-print "mainloop.."
+print("mainloop..")
 while(True):
 
 	# Process touchscreen input
@@ -506,7 +508,7 @@ while(True):
 		label = myfont.render(remainingStr , 1, (255,255,255))
 		screen.blit(label, (280, 130))
 		
-		label = myfont.render(error , 1, (255,255,255))
+		label = myfont.render(str(error) , 1, (255,255,255))
 		screen.blit(label, (10, 280)) 
 	pygame.display.update()
 
