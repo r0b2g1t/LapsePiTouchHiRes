@@ -11,7 +11,7 @@ Enjoy!
 
 Modification for HiRes Display (480x320) and use gphoto2 for camera triggering
 
-![LapsePi Touch](http://i.imgur.com/0LiKRwd.jpg)
+![LapsePi Touch](http://i.imgur.com/6lUPMah.png?1)
 
 **Prerequisites:**
 
