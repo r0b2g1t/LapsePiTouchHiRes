@@ -19,6 +19,7 @@ import os
 import pygame
 import threading
 import time
+import subprocess
 from pygame.locals import FULLSCREEN, MOUSEBUTTONDOWN, MOUSEBUTTONUP
 from time import sleep
 from datetime import datetime, timedelta
@@ -251,7 +252,10 @@ def timeLapse():
 		os.system("echo '0' > /sys/class/gpio/gpio252/value")
 		
 		now = time.strftime("%H_%M_%S")
-		error = os.system('/usr/local/bin/gphoto2 --capture-image-and-download --filename=/mnt/usbstick/timelapse_' + str(now) + '_' + str(i) + 'of' + str(v['Images']) + '.jpg')
+		
+		filename = '--filename=/mnt/usbstick/timelapse_' + str(now) + '_' + str(i) + 'of' + str(v['Images']) + '.jpg'
+		subprocess.Popen([r'/usr/local/bin/gphoto2', '--capture-image-and-download', filename]).wait()
+		# error = os.system('/usr/local/bin/gphoto2 --capture-image-and-download --filename=/mnt/usbstick/timelapse_' + str(now) + '_' + str(i) + 'of' + str(v['Images']) + '.jpg')
 		
 		#  enable the backlight
 		os.system("echo '1' > /sys/class/gpio/gpio252/value")
