@@ -19,6 +19,10 @@ You must have gone through the [Adafruit PiTFT setup instructions](https://learn
 
 You must have gone through the [WiringPi-Python Setup instructions](https://github.com/WiringPi/WiringPi-Python).
 
+You must have to install gphoto2 by the following command:
+	
+	sudo apt-get install gphoto2
+
 **Get repo:**
     
     git clone https://github.com/koehleru/LapsePiTouch.git
@@ -38,5 +42,3 @@ Once youve got that working, have the Pi boot straight into the time-lapse softw
 
 
 Full details at: [Dave's Blog](http://www.davidhunt.ie/?p=3349)
-
-for donation 1LPGEoSdDaXrNuhuWtEH1EyFoTM7gjYs5h

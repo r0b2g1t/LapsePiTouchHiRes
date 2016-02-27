@@ -253,9 +253,13 @@ def timeLapse():
 		
 		now = time.strftime("%H_%M_%S")
 		
-		filename = '--filename=/mnt/usbstick/timelapse_' + str(now) + '_' + str(i) + 'of' + str(v['Images']) + '.jpg'
-		subprocess.Popen([r'/usr/local/bin/gphoto2', '--capture-image-and-download', filename]).wait()
-		# error = os.system('/usr/local/bin/gphoto2 --capture-image-and-download --filename=/mnt/usbstick/timelapse_' + str(now) + '_' + str(i) + 'of' + str(v['Images']) + '.jpg')
+		# filename = '--filename=/mnt/usbstick/timelapse_' + str(now) + '_' + str(i) + 'of' + str(v['Images']) + '.jpg'
+		
+		# capture image and leave the files on the camera
+		subprocess.Popen([r'/usr/bin/gphoto2', '--capture-image']).wait()
+
+		# subprocess.Popen([r'/usr/bin/gphoto2', '--capture-image-and-download', filename]).wait()
+		# error = os.system('/usr/bin/gphoto2 --capture-image-and-download --filename=/mnt/usbstick/timelapse_' + str(now) + '_' + str(i) + 'of' + str(v['Images']) + '.jpg')
 		
 		#  enable the backlight
 		os.system("echo '1' > /sys/class/gpio/gpio252/value")
@@ -279,8 +283,8 @@ numberstring	= "0"
 motorRunning	= 0
 motorDirection	= 0
 returnScreen   = 0
-motorpinA      = 18
-motorpinB      = 27
+motorpinA      = 29
+motorpinB      = 28
 motorpin       = motorpinA
 backlightpin   = 252
 currentframe   = 0
@@ -374,7 +378,10 @@ os.putenv('SDL_MOUSEDEV'   , '/dev/input/touchscreen')
 
 # auto-detect camera
 print("Init gphoto2")
-os.system('/usr/local/bin/gphoto2 --auto-detect')
+os.system('/usr/bin/gphoto2 --auto-detect')
+
+# set the storage for the images to the card in the camera
+os.system('/usr/bin/gphoto2 --set-config capturetarget=1')
 
 # Init pygame and screen
 print ("Initting...")
