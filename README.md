@@ -34,11 +34,14 @@ You must have to install gphoto2 by the following command:
 
     sudo python lapse_hi.py
 	
-Once youve got that working, have the Pi boot straight into the time-lapse software by editing /etc/rc.local and adding the following lines before exit 0
+Once youve got that working, have the Pi boot straight into the time-lapse software by editing /home/pi/.config/lxsession/LXDE-pi/autostart file:
 
-	cd /home/pi/LapsePiTouch
+	@lxterminal -e /home/pi/lapsepiplauncher.sh
 
-	python lapse_hi.py
+And create the script /home/pi/lapsepiplauncher.sh by adding the the following lines:
 
+	#!/bin/sh
+	cd LapsePiTouch
+	sudo python lapse_hi.py
 
 Full details at: [Dave's Blog](http://www.davidhunt.ie/?p=3349)
