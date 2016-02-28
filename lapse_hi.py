@@ -376,6 +376,10 @@ os.putenv('SDL_FBDEV'      , '/dev/fb1')
 os.putenv('SDL_MOUSEDRV'   , 'TSLIB')
 os.putenv('SDL_MOUSEDEV'   , '/dev/input/touchscreen')
 
+# kill all gphoto processes
+print("Kill all gphoto2 processes")
+os.system('pkill gphoto')
+
 # auto-detect camera
 print("Init gphoto2")
 os.system('/usr/bin/gphoto2 --auto-detect')
