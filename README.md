@@ -25,7 +25,7 @@ You must have to install gphoto2 by the following command:
 
 **Get repo:**
     
-    git clone https://github.com/koehleru/LapsePiTouch.git
+    git clone https://github.com/r0b2g1t/LapsePiTouch.git
     
     
 **Usage:**

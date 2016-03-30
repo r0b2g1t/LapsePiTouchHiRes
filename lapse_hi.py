@@ -516,7 +516,7 @@ while(True):
 		remaining = float((intervalLength * (v['Images'] - currentframe)) / 1000)
 		sec = timedelta(seconds=int(remaining))
 		d = datetime(1,1,1) + sec
-		remainingStr = "%dh%dm%ds" % (d.hour, d.minute, d.second)
+		remainingStr = "%dh %dm %ds" % (d.hour, d.minute, d.second)
 		
 		label = myfont.render(remainingStr , 1, (255,255,255))
 		screen.blit(label, (280, 130))
