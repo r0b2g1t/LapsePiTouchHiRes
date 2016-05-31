@@ -251,16 +251,13 @@ def timeLapse():
 		# disable the backlight, critical for night timelapses, also saves power
 		os.system("echo '0' > /sys/class/gpio/gpio252/value")
 		
-		now = time.strftime("%H_%M_%S")
-		
-		# filename = '--filename=/mnt/usbstick/timelapse_' + str(now) + '_' + str(i) + 'of' + str(v['Images']) + '.jpg'
-		
-		# capture image and leave the files on the camera
-		subprocess.Popen([r'/usr/bin/gphoto2', '--capture-image']).wait()
+		gpio.digitalWrite(focuspin,gpio.HIGH)
+		sleep(2)
+		gpio.digitalWrite(shutterpin,gpio.HIGH)
+ 		sleep(shutter_length)
+ 		gpio.digitalWrite(shutterpin,gpio.LOW)
+ 		gpio.digitalWrite(focuspin,gpio.LOW)
 
-		# subprocess.Popen([r'/usr/bin/gphoto2', '--capture-image-and-download', filename]).wait()
-		# error = os.system('/usr/bin/gphoto2 --capture-image-and-download --filename=/mnt/usbstick/timelapse_' + str(now) + '_' + str(i) + 'of' + str(v['Images']) + '.jpg')
-		
 		#  enable the backlight
 		os.system("echo '1' > /sys/class/gpio/gpio252/value")
 		interval = float(v['Interval'])/1000.0
@@ -283,6 +280,8 @@ numberstring	= "0"
 motorRunning	= 0
 motorDirection	= 0
 returnScreen   = 0
+focuspin	   = 31
+shutterpin	   = 30
 motorpinA      = 29
 motorpinB      = 28
 motorpin       = motorpinA
@@ -376,17 +375,6 @@ os.putenv('SDL_FBDEV'      , '/dev/fb1')
 os.putenv('SDL_MOUSEDRV'   , 'TSLIB')
 os.putenv('SDL_MOUSEDEV'   , '/dev/input/touchscreen')
 
-# kill all gphoto processes
-print("Kill all gphoto2 processes")
-os.system('pkill gphoto')
-
-# auto-detect camera
-print("Init gphoto2")
-os.system('/usr/bin/gphoto2 --auto-detect')
-
-# set the storage for the images to the card in the camera
-os.system('/usr/bin/gphoto2 --set-config capturetarget=1')
-
 # Init pygame and screen
 print ("Initting...")
 pygame.init()
@@ -415,7 +403,9 @@ for s in buttons:        # For each screenful of buttons...
 
 # Set up GPIO pins
 print("Init GPIO pins...")
-gpio = wiringpi2.GPIO(wiringpi2.GPIO.WPI_MODE_GPIO)  
+gpio = wiringpi2.GPIO(wiringpi2.GPIO.WPI_MODE_GPIO)
+gpio.pinMode(focuspin,gpio.OUTPUT)
+gpio.pinMode(shutterpin,gpio.OUTPUT)  
 gpio.pinMode(motorpinA,gpio.OUTPUT)
 gpio.pinMode(motorpinB,gpio.OUTPUT)
 gpio.pinMode(motorpinB,gpio.OUTPUT)
