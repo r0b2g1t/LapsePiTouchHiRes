@@ -1,7 +1,7 @@
 LapsePiTouch
 ============
 
-Touchscreen Timelapse controller for Raspberry Pi and Adafruit PiTFT by [David Hunt](http://www.davidhunt.ie) 
+Touchscreen Timelapse controller for Raspberry Pi and Adafruit PiTFT by [David Hunt](http://www.davidhunt.ie)
 
 Based on code by PaintYourDragon (Phil B) for Adafruit Industries
 
@@ -19,21 +19,17 @@ You must have gone through the [Adafruit PiTFT setup instructions](https://learn
 
 You must have gone through the [WiringPi-Python Setup instructions](https://github.com/WiringPi/WiringPi-Python).
 
-You must have to install gphoto2 by the following command:
-	
-	sudo apt-get install gphoto2
-
 **Get repo:**
-    
+
     git clone https://github.com/r0b2g1t/LapsePiTouch.git
-    
-    
+
+
 **Usage:**
 
     cd LapsePiTouch
 
     sudo python lapse_hi.py
-	
+
 Once youve got that working, have the Pi boot straight into the time-lapse software by editing /home/pi/.config/lxsession/LXDE-pi/autostart file:
 
 	@lxterminal -e /home/pi/lapsepiplauncher.sh
