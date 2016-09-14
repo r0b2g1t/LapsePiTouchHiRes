@@ -1,4 +1,4 @@
-LapsePiTouch
+LapsePiTouchHiRes
 ============
 
 Touchscreen Timelapse controller for Raspberry Pi and Adafruit PiTFT by [David Hunt](http://www.davidhunt.ie)
@@ -9,7 +9,7 @@ Read more about this project at [Dave's Blog](http://www.davidhunt.ie/?p=3349)
 
 Enjoy!
 
-Modification for HiRes Display (480x320) and use gphoto2 for camera triggering
+Modification for HiRes Display (480x320).
 
 ![LapsePi Touch](http://i.imgur.com/6lUPMah.png?1)
 
@@ -21,7 +21,7 @@ You must have gone through the [WiringPi-Python Setup instructions](https://gith
 
 **Get repo:**
 
-    git clone https://github.com/r0b2g1t/LapsePiTouch.git
+    git clone https://github.com/r0b2g1t/LapsePiTouchHiRes.git
 
 
 **Usage:**
